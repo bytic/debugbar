@@ -1,0 +1,33 @@
+{
+  "name": "bytic/debugbar",
+  "type": "library",
+  "description": "Php Framework",
+  "homepage": "https://github.com/bytic/debugbar",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gabriel Solomon",
+      "email": "hello@gabrielsolomon.ro"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Nip\\DebugBar\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Nip\\DebugBar\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": "^7.0",
+    "maximebf/debugbar": "^1.15",
+    "bytic/debug": "^1.0"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.0",
+    "phpunit/phpunit": "^6.2",
+    "mockery/mockery": "^0.9"
+  }
+}

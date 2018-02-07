@@ -23,7 +23,8 @@
   "require": {
     "php": "^7.0",
     "maximebf/debugbar": "^1.15",
-    "bytic/debug": "^1.0"
+    "bytic/debug": "^1.0",
+    "bytic/http": "^1.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0",

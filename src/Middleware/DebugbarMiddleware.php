@@ -2,10 +2,11 @@
 
 namespace Nip\DebugBar\Middleware;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
 use Nip\DebugBar\DebugBar;
 use Nip\Http\ServerMiddleware\Middlewares\ServerMiddlewareInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Class DebugbarMiddleware
@@ -33,9 +34,9 @@ class DebugbarMiddleware implements ServerMiddlewareInterface
     /**
      * @inheritdoc
      */
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $response = $delegate->process($request);
+        $response = $handler->handle($request);
 
         // Modify the response to add the Debugbar
         $this->debugbar->modifyResponse($request, $response);

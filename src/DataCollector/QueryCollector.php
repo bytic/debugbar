@@ -7,7 +7,7 @@ use DebugBar\DataCollector\TimeDataCollector;
 use Nip\Database\Adapters\Profiler\QueryProfile;
 
 /**
- * Collects data about SQL statements executed with PDO
+ * Collects data about SQL statements executed with PDO.
  */
 class QueryCollector extends PDOCollector
 {
@@ -29,7 +29,7 @@ class QueryCollector extends PDOCollector
     }
 
     /**
-     * Enable/disable finding the source
+     * Enable/disable finding the source.
      *
      * @param bool $value
      */
@@ -39,7 +39,6 @@ class QueryCollector extends PDOCollector
     }
 
     /**
-     *
      * @param QueryProfile $profile
      */
     public function addQuery($profile)
@@ -98,11 +97,11 @@ class QueryCollector extends PDOCollector
         }
     }
 
-
     /**
-     * Shorten the path by removing the relative links and base dir
+     * Shorten the path by removing the relative links and base dir.
      *
      * @param string $path
+     *
      * @return string
      */
     protected function normalizeFilename($path)
@@ -123,7 +122,7 @@ class QueryCollector extends PDOCollector
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function collect()
     {
@@ -141,7 +140,7 @@ class QueryCollector extends PDOCollector
                 'memory_str' => $query['memory_str'],
                 'duration_str' => $this->formatDuration($query['time']),
                 'stmt_id' => $query['source'],
-//                'connection' => $query['connection'],
+                'connection' => $query['connection'],
             ];
 
             //Add the results from the explain as new rows
@@ -170,6 +169,7 @@ class QueryCollector extends PDOCollector
      * Removes extra spaces at the beginning and end of the SQL query and its lines.
      *
      * @param string $sql
+     *
      * @return string
      */
     protected function formatSql($sql)
@@ -178,7 +178,7 @@ class QueryCollector extends PDOCollector
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -186,20 +186,20 @@ class QueryCollector extends PDOCollector
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getWidgets()
     {
         return [
-            "queries" => [
-                "icon" => "inbox",
-                "widget" => "PhpDebugBar.Widgets.SQLQueriesWidget",
-                "map" => "queries",
-                "default" => "[]",
+            'queries' => [
+                'icon' => 'inbox',
+                'widget' => 'PhpDebugBar.Widgets.SQLQueriesWidget',
+                'map' => 'queries',
+                'default' => '[]',
             ],
-            "queries:badge" => [
-                "map" => "queries.nb_statements",
-                "default" => 0,
+            'queries:badge' => [
+                'map' => 'queries.nb_statements',
+                'default' => 0,
             ],
         ];
     }

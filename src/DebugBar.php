@@ -7,9 +7,6 @@ use DebugBar\DebugBar as DebugBarGeneric;
 use Monolog\Logger as MonologLogger;
 use Nip\DebugBar\Formatter\MonologFormatter;
 use Nip\Http\Response\Response;
-use Nip\Request;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class DebugBar
@@ -17,21 +14,18 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 abstract class DebugBar extends DebugBarGeneric
 {
-
     /**
      * True when booted.
      *
      * @var bool
      */
     protected $booted = false;
-
     /**
-     * True when enabled, false disabled an null for still unknown
+     * True when enabled, false disabled an null for still unknown.
      *
      * @var bool
      */
     protected $enabled = false;
-
 
     /**
      * Enable the DebugBar and boot, if not already booted.
@@ -52,8 +46,6 @@ abstract class DebugBar extends DebugBarGeneric
         }
 
         $this->doBoot();
-
-        $this->booted = true;
     }
 
     public function doBoot()
@@ -61,7 +53,7 @@ abstract class DebugBar extends DebugBarGeneric
     }
 
     /**
-     * Disable the DebugBar
+     * Disable the DebugBar.
      */
     public function disable()
     {
@@ -69,35 +61,9 @@ abstract class DebugBar extends DebugBarGeneric
     }
 
     /**
-     * @param MonologLogger $monolog
-     * @throws \DebugBar\DebugBarException
-     */
-    public function addMonolog(MonologLogger $monolog)
-    {
-        $collector = new MonologCollector($monolog);
-        $collector->setFormatter(new MonologFormatter());
-        $this->addCollector($collector);
-    }
-
-    /**
-     * Modify the response and inject the debugbar (or data in headers)
+     * Check if the DebugBar is enabled.
      *
-     * @param  Request|ServerRequestInterface $request
-     * @param  Response|ResponseInterface $response
-     * @return Response
-     */
-    public function modifyResponse(Request $request, Response $response)
-    {
-        if (!$this->isEnabled()) {
-            return $response;
-        }
-
-        return $this->injectDebugBar($response);
-    }
-
-    /**
-     * Check if the DebugBar is enabled
-     * @return boolean
+     * @return bool
      */
     public function isEnabled()
     {
@@ -109,7 +75,18 @@ abstract class DebugBar extends DebugBarGeneric
     }
 
     /**
-     * Injects the web debug toolbar
+     * @param MonologLogger $monolog
+     */
+    public function addMonolog(MonologLogger $monolog)
+    {
+        $collector = new MonologCollector($monolog);
+        $collector->setFormatter(new MonologFormatter());
+        $this->addCollector($collector);
+    }
+
+    /**
+     * Injects the web debug toolbar.
+     *
      * @param Response $response
      */
     public function injectDebugBar(Response $response)
@@ -123,33 +100,28 @@ abstract class DebugBar extends DebugBarGeneric
         if (false !== $pos) {
             $content = substr($content, 0, $pos).$renderedContent.substr($content, $pos);
         } else {
-            $content = '<body>'.$content.'</body>'.$renderedContent;
+            $content = $content.$renderedContent;
         }
         // Update the new content and reset the content length
         $response->setContent($content);
         $response->headers->remove('Content-Length');
     }
 
-    /**
-     * @return mixed|string
-     */
     protected function generateAssetsContent()
     {
         $renderer = $this->getJavascriptRenderer();
         ob_start();
         echo '<style>';
-        $renderer->dumpCssAssets();
+        echo $renderer->dumpCssAssets();
         echo '</style>';
         echo '<script type="text/javascript">';
-        $renderer->dumpJsAssets();
+        echo $renderer->dumpJsAssets();
         echo '</script>';
         echo '<script type="text/javascript">jQuery.noConflict(true);</script>';
         $content = ob_get_clean();
 
         if (defined('FONTS_URL')) {
             $content = str_replace('../fonts/', FONTS_URL, $content);
-        } else {
-            $content = str_replace('../fonts', asset('/compiled/fonts/'), $content);
         }
 
         return $content;

@@ -24,6 +24,7 @@
     "php": "^7.0",
     "maximebf/debugbar": "^1.15",
     "bytic/debug": "^1.0",
+    "bytic/logger": "^1.0",
     "bytic/http": "^1.0"
   },
   "require-dev": {

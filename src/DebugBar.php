@@ -6,6 +6,7 @@ use DebugBar\Bridge\MonologCollector;
 use DebugBar\DebugBar as DebugBarGeneric;
 use Monolog\Logger as MonologLogger;
 use Nip\DebugBar\Formatter\MonologFormatter;
+use Nip\Http\Response\JsonResponse;
 use Nip\Http\Response\Response;
 use Nip\Request;
 use Psr\Http\Message\ResponseInterface;
@@ -86,9 +87,9 @@ abstract class DebugBar extends DebugBarGeneric
      * @param  Response|ResponseInterface $response
      * @return Response
      */
-    public function modifyResponse(Request $request, Response $response)
+    public function modifyResponse(Request $request, ResponseInterface $response)
     {
-        if (!$this->isEnabled()) {
+        if (!$this->isEnabled() || $response instanceof JsonResponse) {
             return $response;
         }
 
@@ -112,7 +113,7 @@ abstract class DebugBar extends DebugBarGeneric
      * Injects the web debug toolbar
      * @param Response $response
      */
-    public function injectDebugBar(Response $response)
+    public function injectDebugBar(ResponseInterface $response)
     {
         $content = $response->getContent();
 

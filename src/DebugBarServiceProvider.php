@@ -44,8 +44,6 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
      */
     public function boot()
     {
-        $app = $this->getContainer()->get('app');
-
         // If enabled is null, set from the app.debug value
 //        $enabled = $this->app['config']->get('debugbar.enabled');
 
@@ -56,6 +54,13 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
         if (!$enabled) {
             return;
         }
+
+        $this->bootDebugBar();
+    }
+
+    protected function bootDebugBar()
+    {
+        $app = $this->getContainer()->get('app');
 
         /** @var DebugBar $debugBar */
         $debugBar = $app->get('debugbar');
@@ -70,13 +75,32 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
      */
     protected function checkAppDebug()
     {
+        $config = $this->getConfigValue();
+        if ($config === true || $config == 'true') {
+            return true;
+        }
+        if ($config === 1 || $config == '1') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function getConfigValue()
+    {
+        if (!$this->getContainer()->get('config')->has('app.debug')) {
+            return false;
+        }
         return $this->getContainer()->get('config')->get('app.debug');
     }
+
 
     /**
      * Register the Debugbar Middleware
      *
-     * @param  string $middleware
+     * @param string $middleware
      */
     protected function registerMiddleware($middleware)
     {

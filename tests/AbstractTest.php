@@ -15,4 +15,10 @@ abstract class AbstractTest extends TestCase
      * @var \UnitTester
      */
     protected $tester;
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        \Mockery::close();
+    }
 }

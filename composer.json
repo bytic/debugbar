@@ -22,12 +22,12 @@
   },
   "require": {
     "php": "^7.0",
+    "bytic/container": "^0.9",
     "monolog/monolog": "^1.20",
     "maximebf/debugbar": "^1.15"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "^3.0",
-    "phpunit/phpunit": "^6.2",
-    "mockery/mockery": "^0.9"
+    "phpunit/phpunit": "^7.2",
+    "mockery/mockery": "^1.0"
   }
 }

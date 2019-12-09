@@ -13,6 +13,10 @@ use Nip\DebugBar\DataCollector\RouteCollector;
 
 //use DebugBar\DataCollector\ConfigCollector;
 
+/**
+ * Class StandardDebugBar
+ * @package Nip\DebugBar
+ */
 class StandardDebugBar extends DebugBar
 {
     public function doBoot()

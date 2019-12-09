@@ -3,6 +3,7 @@
 namespace Nip\DebugBar\Tests;
 
 use Nip\DebugBar\DebugBarServiceProvider;
+use Nip\DebugBar\StandardDebugBar;
 
 /**
  * Class DebugBarServiceProviderTest
@@ -10,6 +11,15 @@ use Nip\DebugBar\DebugBarServiceProvider;
  */
 class DebugBarServiceProviderTest extends AbstractTest
 {
+
+    public function test_register()
+    {
+        $provider = new DebugBarServiceProvider();
+        $provider->register();
+
+        self::assertInstanceOf(StandardDebugBar::class, $provider->getContainer()->get('debugbar'));
+    }
+
     /**
      * @dataProvider dataBoot
      * @param $config

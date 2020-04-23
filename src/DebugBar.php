@@ -35,9 +35,7 @@ abstract class DebugBar extends DebugBarGeneric
     {
         $this->enabled = true;
 
-        if (!$this->booted) {
-            $this->boot();
-        }
+        $this->boot();
     }
 
     /**

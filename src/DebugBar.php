@@ -18,13 +18,7 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 abstract class DebugBar extends DebugBarGeneric
 {
-
-    /**
-     * True when booted.
-     *
-     * @var bool
-     */
-    protected $booted = false;
+    use Traits\Bootable;
 
     /**
      * True when enabled, false disabled an null for still unknown
@@ -45,21 +39,6 @@ abstract class DebugBar extends DebugBarGeneric
             $this->boot();
         }
     }
-
-    public function boot()
-    {
-        if ($this->booted) {
-            return;
-        }
-
-        $this->doBoot();
-        $this->booted = true;
-    }
-
-    /**
-     * @return void
-     */
-    abstract public function doBoot();
 
     /**
      * Disable the DebugBar

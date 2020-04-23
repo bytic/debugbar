@@ -8,15 +8,14 @@ use Nip\Router\Route\AbstractRoute as Route;
 use Nip\Router\RouterAwareTrait;
 
 /**
- * Class RouteCollector
- * @package Nip\DebugBar\DataCollector
+ * Class RouteCollector.
  */
 class RouteCollector extends DataCollector implements Renderable
 {
     use RouterAwareTrait;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -24,7 +23,7 @@ class RouteCollector extends DataCollector implements Renderable
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function collect()
     {
@@ -35,6 +34,7 @@ class RouteCollector extends DataCollector implements Renderable
 
     /**
      * @param Route $route
+     *
      * @return array
      */
     public function getRouteInformation($route)
@@ -54,22 +54,22 @@ class RouteCollector extends DataCollector implements Renderable
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getWidgets()
     {
         $widgets = [
-            "route" => [
-                "icon" => "share",
-                "widget" => "PhpDebugBar.Widgets.VariableListWidget",
-                "map" => "route",
-                "default" => "{}",
+            'route' => [
+                'icon' => 'share',
+                'widget' => 'PhpDebugBar.Widgets.VariableListWidget',
+                'map' => 'route',
+                'default' => '{}',
             ],
-            "currentroute" => [
-                "icon" => "share",
-                "tooltip" => "Route",
-                "map" => "route.uri",
-                "default" => "",
+            'currentroute' => [
+                'icon' => 'share',
+                'tooltip' => 'Route',
+                'map' => 'route.uri',
+                'default' => '',
             ],
         ];
 
@@ -79,7 +79,8 @@ class RouteCollector extends DataCollector implements Renderable
     /**
      * Display the route information on the console.
      *
-     * @param  array $routes
+     * @param array $routes
+     *
      * @return void
      */
     protected function displayRoutes(array $routes)

@@ -16,7 +16,7 @@ abstract class AbstractTest extends TestCase
      */
     protected $tester;
 
-    public function tearDown()
+    public function tearDown() : void
     {
         parent::tearDown();
         \Mockery::close();

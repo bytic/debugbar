@@ -2,8 +2,8 @@
 
 namespace Nip\DebugBar;
 
-use Nip\Container\ServiceProviders\Providers\AbstractSignatureServiceProvider;
-use Nip\Container\ServiceProviders\Providers\BootableServiceProviderInterface;
+use Nip\Container\ServiceProvider\AbstractSignatureServiceProvider;
+use Nip\Container\ServiceProvider\BootableServiceProviderInterface;
 use Nip\DebugBar\Middleware\DebugbarMiddleware;
 use Nip\Http\Kernel\Kernel;
 use Nip\Http\Kernel\KernelInterface;
@@ -28,9 +28,9 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
      */
     public function register()
     {
-        $this->getContainer()->alias(StandardDebugBar::class, DebugBar::class);
+        $this->getContainer()->add(DebugBar::class,StandardDebugBar::class );
 
-        $this->getContainer()->share('debugbar', function () {
+        $this->getContainer()->singleton('debugbar', function () {
             $debugbar = $this->getContainer()->get(DebugBar::class);
 
             return $debugbar;

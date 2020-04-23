@@ -53,13 +53,13 @@ abstract class DebugBar extends DebugBarGeneric
         }
 
         $this->doBoot();
-
         $this->booted = true;
     }
 
-    public function doBoot()
-    {
-    }
+    /**
+     * @return void
+     */
+    abstract public function doBoot();
 
     /**
      * Disable the DebugBar
@@ -139,17 +139,17 @@ abstract class DebugBar extends DebugBarGeneric
         $renderer = $this->getJavascriptRenderer();
         ob_start();
         echo '<style>';
-        $renderer->dumpCssAssets();
+        echo $renderer->dumpCssAssets();
         echo '</style>';
         echo '<script type="text/javascript">';
-        $renderer->dumpJsAssets();
+        echo $renderer->dumpJsAssets();
         echo '</script>';
         echo '<script type="text/javascript">jQuery.noConflict(true);</script>';
         $content = ob_get_clean();
 
         if (defined('FONTS_URL')) {
             $content = str_replace('../fonts/', FONTS_URL, $content);
-        } elseif (function_exists('asset')) {
+        } elseif (function_exists('asset') && function_exists('app')) {
             $content = str_replace('../fonts', asset('/compiled/fonts/'), $content);
         }
 

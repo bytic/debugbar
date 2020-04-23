@@ -57,6 +57,6 @@ class DebugbarMiddlewareTest extends AbstractTest
 
         $content = $response->getContent();
         self::assertStringStartsWith('<body>test</body>', $content);
-        self::assertContains('phpdebugbar', $content);
+        self::assertStringContainsString('phpdebugbar', $content);
     }
 }

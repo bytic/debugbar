@@ -2,8 +2,8 @@
 
 namespace Nip\DebugBar;
 
-use Nip\Container\ServiceProvider\AbstractSignatureServiceProvider;
-use Nip\Container\ServiceProvider\BootableServiceProviderInterface;
+use Nip\Container\ServiceProviders\Providers\AbstractSignatureServiceProvider;
+use Nip\Container\ServiceProviders\Providers\BootableServiceProviderInterface;
 use Nip\DebugBar\Middleware\DebugbarMiddleware;
 use Nip\Http\Kernel\Kernel;
 use Nip\Http\Kernel\KernelInterface;
@@ -20,7 +20,7 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
      */
     public function provides()
     {
-        return ['debugbar'];
+        return ['debugbar', 'debugbar.middleware'];
     }
 
     /**
@@ -28,7 +28,13 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
      */
     public function register()
     {
-        $this->getContainer()->add(DebugBar::class,StandardDebugBar::class );
+        $this->registerDebugBar();
+        $this->registerDebugBarMiddleware();
+    }
+
+    protected function registerDebugBar()
+    {
+        $this->getContainer()->add(DebugBar::class, StandardDebugBar::class);
 
         $this->getContainer()->singleton('debugbar', function () {
             $debugbar = $this->getContainer()->get(DebugBar::class);
@@ -36,6 +42,16 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
             return $debugbar;
         });
     }
+
+    protected function registerDebugBarMiddleware()
+    {
+        $this->getContainer()->share('debugbar.middleware', function () {
+            $debugbar = $this->getContainer()->get('debugbar');
+
+            return new DebugbarMiddleware($debugbar);
+        });
+    }
+
 
     /**
      * Bootstrap the application events.
@@ -67,7 +83,7 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
         $debugBar->enable();
         $debugBar->boot();
 
-        $this->registerMiddleware(DebugbarMiddleware::class);
+        $this->registerMiddleware($app->get('debugbar.middleware'));
     }
 
     /**

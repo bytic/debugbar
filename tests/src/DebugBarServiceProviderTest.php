@@ -23,7 +23,7 @@ class DebugBarServiceProviderTest extends AbstractTest
         $provider->shouldReceive('bootDebugBar')->times($times);
 
         $provider->boot();
-        self::assertCount(1, $provider->provides());
+        self::assertCount(2, $provider->provides());
     }
 
     /**

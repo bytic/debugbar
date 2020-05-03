@@ -19,6 +19,7 @@ use Psr\Http\Message\ServerRequestInterface;
 abstract class DebugBar extends DebugBarGeneric
 {
     use Traits\Bootable;
+    use Traits\HasMonologCollector;
 
     /**
      * True when enabled, false disabled an null for still unknown
@@ -44,17 +45,6 @@ abstract class DebugBar extends DebugBarGeneric
     public function disable()
     {
         $this->enabled = false;
-    }
-
-    /**
-     * @param MonologLogger $monolog
-     * @throws \DebugBar\DebugBarException
-     */
-    public function addMonolog(MonologLogger $monolog)
-    {
-        $collector = new MonologCollector($monolog);
-        $collector->setFormatter(new MonologFormatter());
-        $this->addCollector($collector);
     }
 
     /**

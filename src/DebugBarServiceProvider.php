@@ -2,11 +2,13 @@
 
 namespace Nip\DebugBar;
 
+use DebugBar\Bridge\MonologCollector;
 use Nip\Container\ServiceProviders\Providers\AbstractSignatureServiceProvider;
 use Nip\Container\ServiceProviders\Providers\BootableServiceProviderInterface;
 use Nip\DebugBar\Middleware\DebugbarMiddleware;
 use Nip\Http\Kernel\Kernel;
 use Nip\Http\Kernel\KernelInterface;
+use Psr\Log\LoggerInterface as PsrLoggerInterface;
 
 /**
  * Class DebugBarServiceProvider
@@ -30,26 +32,7 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
     {
         $this->registerDebugBar();
         $this->registerDebugBarMiddleware();
-    }
-
-    protected function registerDebugBar()
-    {
-        $this->getContainer()->add(DebugBar::class, StandardDebugBar::class);
-
-        $this->getContainer()->singleton('debugbar', function () {
-            $debugbar = $this->getContainer()->get(DebugBar::class);
-
-            return $debugbar;
-        });
-    }
-
-    protected function registerDebugBarMiddleware()
-    {
-        $this->getContainer()->share('debugbar.middleware', function () {
-            $debugbar = $this->getContainer()->get('debugbar');
-
-            return new DebugbarMiddleware($debugbar);
-        });
+        $this->registerMonologCollector();
     }
 
 
@@ -74,6 +57,26 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
         $this->bootDebugBar();
     }
 
+    protected function registerDebugBar()
+    {
+        $this->getContainer()->add(DebugBar::class, StandardDebugBar::class);
+
+        $this->getContainer()->singleton('debugbar', function () {
+            $debugbar = $this->getContainer()->get(DebugBar::class);
+
+            return $debugbar;
+        });
+    }
+
+    protected function registerDebugBarMiddleware()
+    {
+        $this->getContainer()->share('debugbar.middleware', function () {
+            $debugbar = $this->getContainer()->get('debugbar');
+
+            return new DebugbarMiddleware($debugbar);
+        });
+    }
+
     protected function bootDebugBar()
     {
         $app = $this->getContainer()->get('app');
@@ -84,6 +87,16 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
         $debugBar->boot();
 
         $this->registerMiddleware($app->get('debugbar.middleware'));
+    }
+
+    protected function registerMonologCollector()
+    {
+        if ($this->getContainer()->has('log')) {
+            $logger = $this->getContainer()->get('log');
+            $monolog = $logger->driver()->getLogger();
+            $collector = new MonologCollector($monolog);
+            $this->getContainer()->set(MonologCollector::class, $collector);
+        }
     }
 
     /**
@@ -98,6 +111,7 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
         if ($config === 1 || $config == '1') {
             return true;
         }
+
         return false;
     }
 
@@ -109,6 +123,7 @@ class DebugBarServiceProvider extends AbstractSignatureServiceProvider implement
         if (!$this->getContainer()->get('config')->has('app.debug')) {
             return false;
         }
+
         return $this->getContainer()->get('config')->get('app.debug');
     }
 

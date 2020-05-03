@@ -2,13 +2,13 @@
 
 namespace Nip\DebugBar;
 
+use DebugBar\Bridge\MonologCollector;
 use DebugBar\DataCollector\ExceptionsCollector;
 use DebugBar\DataCollector\MemoryCollector;
 use DebugBar\DataCollector\MessagesCollector;
 use DebugBar\DataCollector\PhpInfoCollector;
 use DebugBar\DataCollector\RequestDataCollector;
 use DebugBar\DataCollector\TimeDataCollector;
-use Monolog\Logger as Monolog;
 use Nip\DebugBar\DataCollector\RouteCollector;
 use Nip\DebugBar\Traits\HasQueryCollector;
 
@@ -34,9 +34,7 @@ class StandardDebugBar extends DebugBar
 
         $this->doBootQueryCollector();
 
-        if (app()->has(Monolog::class)) {
-            $monolog = app(Monolog::class);
-            $this->addMonolog($monolog);
+        if ($this->doBootMonologCollector()) {
         } else {
             $this->addCollector(new ExceptionsCollector());
         }

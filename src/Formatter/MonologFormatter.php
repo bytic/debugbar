@@ -10,7 +10,7 @@ use Monolog\Formatter\HtmlFormatter;
  */
 class MonologFormatter extends HtmlFormatter
 {
-    public function format(array $record)
+    public function format(array $record): string
     {
         $title = $record['level_name'].' '.(string)$record['message'];
         $return = str_pad($title, 100, ' ');

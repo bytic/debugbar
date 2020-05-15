@@ -39,18 +39,17 @@ class RouteCollector extends DataCollector implements Renderable
      */
     public function getRouteInformation($route)
     {
-        if ($route) {
-            $result = [
-                'uri' => $route->getUri(),
-                'name' => $route->getName(),
-                'class' => $route->getClassName(),
-                'params' => $this->getDataFormatter()->formatVar($route->getParams()),
-            ];
-        } else {
-            $result = [];
+        if ($route instanceof \Symfony\Component\Routing\Route) {
+            return $this->getRouteInformationFromClass($route);
         }
 
-        return $result;
+        if (is_string($route)) {
+            return [
+                'name' => $route,
+            ];
+        }
+
+        return [];
     }
 
     /**
@@ -88,5 +87,19 @@ class RouteCollector extends DataCollector implements Renderable
         $routes = ['1', 2, 5];
         $this->table->setHeaders($this->headers)->setRows($routes);
         $this->table->render($this->getOutput());
+    }
+
+    /**
+     * @param \Symfony\Component\Routing\Route $route
+     * @return array
+     */
+    protected function getRouteInformationFromClass(\Symfony\Component\Routing\Route $route)
+    {
+        return [
+            'uri' => $route->getUri(),
+            'name' => $route->getName(),
+            'class' => $route->getClassName(),
+            'params' => $this->getDataFormatter()->formatVar($route->getParams()),
+        ];
     }
 }

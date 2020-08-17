@@ -2,13 +2,10 @@
 
 namespace Nip\DebugBar;
 
-use DebugBar\Bridge\MonologCollector;
 use DebugBar\DebugBar as DebugBarGeneric;
-use Monolog\Logger as MonologLogger;
-use Nip\DebugBar\Formatter\MonologFormatter;
+use Nip\Http\Request;
 use Nip\Http\Response\JsonResponse;
 use Nip\Http\Response\Response;
-use Nip\Request;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -54,7 +51,7 @@ abstract class DebugBar extends DebugBarGeneric
      * @param  Response|ResponseInterface $response
      * @return Response
      */
-    public function modifyResponse(Request $request, ResponseInterface $response)
+    public function modifyResponse(ServerRequestInterface $request, ResponseInterface $response)
     {
         if (!$this->isEnabled() || $response instanceof JsonResponse) {
             return $response;

@@ -113,7 +113,7 @@ abstract class DebugBar extends DebugBarGeneric
 
         if (defined('FONTS_URL')) {
             $content = str_replace('../fonts/', FONTS_URL, $content);
-        } elseif (function_exists('asset') && function_exists('app')) {
+        } elseif (function_exists('asset') && function_exists('app') && app()->has('url')) {
             $content = str_replace('../fonts', asset('/compiled/fonts/'), $content);
         }
 

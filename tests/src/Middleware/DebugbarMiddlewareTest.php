@@ -7,7 +7,7 @@ use Nip\DebugBar\Middleware\DebugbarMiddleware;
 use Nip\DebugBar\Tests\AbstractTest;
 use Nip\Http\Response\Response;
 use Nip\Http\ServerMiddleware\Dispatcher;
-use Nip\Request;
+use Nip\Http\Request;
 
 /**
  * Class DebugbarMiddlewareTest
@@ -23,7 +23,9 @@ class DebugbarMiddlewareTest extends AbstractTest
             [
                 new DebugbarMiddleware($debugbar),
                 function () {
-                    return (new Response())->setContent('test');
+                    $response = new Response();
+                    $response->setContent('test');
+                    return $response;
                 },
             ]
         );
@@ -44,7 +46,9 @@ class DebugbarMiddlewareTest extends AbstractTest
             [
                 new DebugbarMiddleware($debugbar),
                 function () {
-                    return (new Response())->setContent('test');
+                    $response = new Response();
+                    $response->setContent('test');
+                    return $response;
                 },
             ]
         );

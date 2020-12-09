@@ -15,7 +15,7 @@ class MonologFormatterTest extends AbstractTest
     {
         $formatter = new MonologFormatter();
 
-        $record = require TEST_FIXTURE_PATH.'/records/simple.php';
+        $record = require TEST_FIXTURE_PATH . '/records/simple.php';
         self::assertStringStartsWith($record['level_name'], $formatter->format($record));
     }
 }

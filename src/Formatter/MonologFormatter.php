@@ -12,7 +12,7 @@ class MonologFormatter extends HtmlFormatter
 {
     public function format(array $record): string
     {
-        $title = $record['level_name'].' '.(string)$record['message'];
+        $title = $record['level_name'] . ' ' . (string)$record['message'];
         $return = str_pad($title, 100, ' ');
         $return .= parent::format($record);
 

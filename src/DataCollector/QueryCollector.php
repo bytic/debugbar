@@ -47,8 +47,8 @@ class QueryCollector extends PDOCollector
         $query = $profile->getQuery();
 
         // Run EXPLAIN on this query (if needed)
-        if ($this->explainQuery && preg_match('/^('.implode($this->explainTypes).') /i', $query)) {
-            $result = $profile->getAdapter()->query('EXPLAIN '.$query);
+        if ($this->explainQuery && preg_match('/^(' . implode($this->explainTypes) . ') /i', $query)) {
+            $result = $profile->getAdapter()->query('EXPLAIN ' . $query);
             $explainResults = $profile->getAdapter()->fetchArray($result);
         }
 
@@ -83,14 +83,14 @@ class QueryCollector extends PDOCollector
         $traces = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS | DEBUG_BACKTRACE_PROVIDE_OBJECT);
         foreach ($traces as $trace) {
             if (isset($trace['class']) && isset($trace['file']) && strpos(
-                    $trace['file'],
-                    DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR
-                ) === false
+                $trace['file'],
+                DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR
+            ) === false
             ) {
                 $file = $trace['file'];
                 $line = isset($trace['line']) ? $trace['line'] : '?';
 
-                return $this->normalizeFilename($file).':'.$line;
+                return $this->normalizeFilename($file) . ':' . $line;
             } elseif (isset($trace['function']) && $trace['function'] == 'Illuminate\Routing\{closure}') {
                 return 'Route binding';
             }
@@ -146,7 +146,7 @@ class QueryCollector extends PDOCollector
             //Add the results from the explain as new rows
             foreach ($query['explain'] as $explain) {
                 $statements[] = [
-                    'sql' => ' - EXPLAIN #'.$explain->id.': `'.$explain->table.'` ('.$explain->select_type.')',
+                    'sql' => ' - EXPLAIN #' . $explain->id . ': `' . $explain->table . '` (' . $explain->select_type . ')',
                     'params' => $explain,
                     'row_count' => $explain->rows,
                     'stmt_id' => $explain->id,

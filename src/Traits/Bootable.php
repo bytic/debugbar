@@ -8,7 +8,6 @@ namespace Nip\DebugBar\Traits;
  */
 trait Bootable
 {
-
     /**
      * True when booted.
      *

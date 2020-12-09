@@ -12,7 +12,6 @@ use Nip\DebugBar\Formatter\MonologFormatter;
  */
 trait HasMonologCollector
 {
-
     /**
      * @return bool
      * @throws \DebugBar\DebugBarException

@@ -82,13 +82,13 @@ abstract class DebugBar extends DebugBarGeneric
         $content = $response->getContent();
 
         $renderer = $this->getJavascriptRenderer();
-        $renderedContent = $this->generateAssetsContent().$renderer->render();
+        $renderedContent = $this->generateAssetsContent() . $renderer->render();
 
         $pos = strripos($content, '</body>');
         if (false !== $pos) {
-            $content = substr($content, 0, $pos).$renderedContent.substr($content, $pos);
+            $content = substr($content, 0, $pos) . $renderedContent . substr($content, $pos);
         } else {
-            $content = '<body>'.$content.'</body>'.$renderedContent;
+            $content = '<body>' . $content . '</body>' . $renderedContent;
         }
         // Update the new content and reset the content length
         $response->setContent($content);

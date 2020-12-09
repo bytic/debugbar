@@ -15,7 +15,6 @@ use Nip\Request;
  */
 class DebugbarMiddlewareTest extends AbstractTest
 {
-
     public function testDebugNotEnabled()
     {
         $debugbar = new BaseDebugBar();

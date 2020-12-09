@@ -1,4 +1,5 @@
 <?php
+
 namespace Nip\DebugBar\Middleware;
 
 use Nip\DebugBar\DebugBar;
@@ -6,6 +7,7 @@ use Nip\Http\ServerMiddleware\Middlewares\ServerMiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+
 /**
  * Class DebugbarMiddleware
  * @package Nip\DebugBar\Middleware

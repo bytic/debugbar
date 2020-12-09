@@ -16,7 +16,6 @@ use Psr\Log\LoggerInterface as PsrLoggerInterface;
  */
 class DebugBarServiceProvider extends AbstractSignatureServiceProvider implements BootableServiceProviderInterface
 {
-
     /**
      * @inheritdoc
      */

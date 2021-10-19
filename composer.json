@@ -21,11 +21,10 @@
     }
   },
   "require": {
-    "php": "^7.0",
     "bytic/debug": "^0.9|^1.0",
     "bytic/logger": "^0.9|^1.0",
     "bytic/http": "^0.9|^1.0",
-    "maximebf/debugbar": "^1.15"
+    "maximebf/debugbar": "^1.17"
   },
   "require-dev": {
     "bytic/container": "^0.9|^1.0|^2.0",

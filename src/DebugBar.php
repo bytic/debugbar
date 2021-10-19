@@ -111,11 +111,12 @@ abstract class DebugBar extends DebugBarGeneric
         echo '<script type="text/javascript">jQuery.noConflict(true);</script>';
         $content = ob_get_clean();
 
-        if (defined('FONTS_URL')) {
-            $content = str_replace('../fonts/', FONTS_URL, $content);
-        } elseif (function_exists('asset') && function_exists('app') && app()->has('url')) {
-            $content = str_replace('../fonts', asset('/compiled/fonts/'), $content);
-        }
+        $content = str_replace('../fonts/', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/', $content);
+//        if (defined('FONTS_URL')) {
+//            $content = str_replace('../fonts/', FONTS_URL, $content);
+//        } elseif (function_exists('asset') && function_exists('app') && app()->has('url')) {
+//            $content = str_replace('../fonts', asset('/compiled/fonts/'), $content);
+//        }
 
         return $content;
     }

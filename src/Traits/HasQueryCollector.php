@@ -24,9 +24,6 @@ trait HasQueryCollector
     {
         $this->addCollector(new QueryCollector());
 
-        $databaseManager = app('db');
-        $databaseManager->connection();
-
         $this->populateQueryCollector();
     }
 
@@ -34,10 +31,13 @@ trait HasQueryCollector
     {
         /** @var DatabaseManager $databaseManager */
         $databaseManager = app('db');
-        $connections = $databaseManager->getConnections();
 
-        foreach ($connections as $connection) {
-            $this->initDatabaseConnection($connection);
+        $connections = config('database.connections');
+
+        foreach ($connections as $name => $config) {
+            $this->initDatabaseConnection(
+                $databaseManager->connection($name)
+            );
         }
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nip\DebugBar\Middleware;
 
 use Nip\DebugBar\DebugBar;

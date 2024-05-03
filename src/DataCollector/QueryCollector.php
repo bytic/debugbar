@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nip\DebugBar\DataCollector;
 
 use DebugBar\DataCollector\PDO\PDOCollector;

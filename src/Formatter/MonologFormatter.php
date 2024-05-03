@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nip\DebugBar\Formatter;
 
 use Monolog\Formatter\HtmlFormatter;
+use Monolog\LogRecord;
 
 /**
  * Class MonologFormatter
@@ -10,9 +13,9 @@ use Monolog\Formatter\HtmlFormatter;
  */
 class MonologFormatter extends HtmlFormatter
 {
-    public function format(array $record): string
+    public function format(LogRecord $record): string
     {
-        $title = $record['level_name'] . ' ' . (string)$record['message'];
+        $title = $record->level->getName() . ' ' . $record->message;
         $return = str_pad($title, 100, ' ');
         $return .= parent::format($record);
 

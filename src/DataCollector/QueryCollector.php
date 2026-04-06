@@ -15,7 +15,6 @@ class QueryCollector extends PDOCollector
 {
     protected $timeCollector;
     protected $queries = [];
-    protected $renderSqlWithParams = false;
     protected $findSource = false;
     protected $explainQuery = false;
     protected $explainTypes = ['SELECT']; // ['SELECT', 'INSERT', 'UPDATE', 'DELETE']; for MySQL 5.6.3+
@@ -28,6 +27,7 @@ class QueryCollector extends PDOCollector
     public function __construct(TimeDataCollector $timeCollector = null)
     {
         $this->timeCollector = $timeCollector;
+        $this->renderSqlWithParams = false;
     }
 
     /**
@@ -118,7 +118,7 @@ class QueryCollector extends PDOCollector
     /**
      * Reset the queries.
      */
-    public function reset()
+    public function reset(): void
     {
         $this->queries = [];
     }
@@ -126,7 +126,7 @@ class QueryCollector extends PDOCollector
     /**
      * {@inheritdoc}
      */
-    public function collect()
+    public function collect(): array
     {
         $totalTime = 0;
         $queries = $this->queries;
@@ -182,7 +182,7 @@ class QueryCollector extends PDOCollector
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'queries';
     }
@@ -190,7 +190,7 @@ class QueryCollector extends PDOCollector
     /**
      * {@inheritdoc}
      */
-    public function getWidgets()
+    public function getWidgets(): array
     {
         return [
             'queries' => [

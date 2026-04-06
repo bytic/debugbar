@@ -140,7 +140,7 @@ class QueryCollector extends PDOCollector
                 'row_count' => $query['row_count'],
                 'duration' => $query['time'],
                 'memory_str' => $query['memory_str'],
-                'duration_str' => $this->formatDuration($query['time']),
+                'duration_str' => $this->getDataFormatter()->formatDuration($query['time']),
                 'stmt_id' => $query['source'],
                 'connection' => isset($query['connection']) ? $query['connection'] : '',
             ];
@@ -160,7 +160,7 @@ class QueryCollector extends PDOCollector
             'nb_statements' => count($queries),
             'nb_failed_statements' => 0,
             'accumulated_duration' => $totalTime,
-            'accumulated_duration_str' => $this->formatDuration($totalTime),
+            'accumulated_duration_str' => $this->getDataFormatter()->formatDuration($totalTime),
             'statements' => $statements,
         ];
 

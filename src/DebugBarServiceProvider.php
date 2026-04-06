@@ -2,7 +2,7 @@
 
 namespace Nip\DebugBar;
 
-use DebugBar\Bridge\MonologCollector;
+use DebugBar\Bridge\Monolog\MonologCollector;
 use Nip\Container\ServiceProviders\Providers\AbstractSignatureServiceProvider;
 use Nip\Container\ServiceProviders\Providers\BootableServiceProviderInterface;
 use Nip\DebugBar\Middleware\DebugbarMiddleware;

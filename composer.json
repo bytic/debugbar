@@ -24,7 +24,8 @@
     "bytic/debug": "^0.9|^1.0|^2.0",
     "bytic/logger": "^0.9|^1.0|^2.0",
     "bytic/http": "^0.9|^1.0|^2.0",
-    "php-debugbar/php-debugbar": "^2.0|^3.0"
+    "php-debugbar/php-debugbar": "^2.0|^3.0",
+    "php-debugbar/monolog-bridge": "^1.0"
   },
   "require-dev": {
     "bytic/container": "^0.9|^1.0|^2.0",

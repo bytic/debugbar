@@ -1,11 +1,16 @@
 <?php
 
-return [
-    'level' => 100,
-    'level_name' => 'Log level',
+$log = new \Monolog\LogRecord(
+    new DateTimeImmutable(),
+    'production',
+    \Monolog\Level::from(100),
+    'Test log message',
+);
+
+$log = $log->with(...[
     'message' => 'Test log message',
-    'channel' => 'production',
     'context' => [],
-    'datetime' => new DateTime(),
     'extra' => [],
-];
+]);
+
+return $log;

@@ -95,29 +95,11 @@ abstract class DebugBar extends DebugBarGeneric
         $response->headers->remove('Content-Length');
     }
 
-    /**
-     * @return mixed|string
-     */
-    protected function generateAssetsContent()
+    protected function generateAssetsContent(): string
     {
         $renderer = $this->getJavascriptRenderer();
-        ob_start();
-        echo '<style>';
-        echo $renderer->dumpCssAssets();
-        echo '</style>';
-        echo '<script type="text/javascript">';
-        echo $renderer->dumpJsAssets();
-        echo '</script>';
-        echo '<script type="text/javascript">jQuery.noConflict(true);</script>';
-        $content = ob_get_clean();
 
-        $content = str_replace('../fonts/', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/', $content);
-//        if (defined('FONTS_URL')) {
-//            $content = str_replace('../fonts/', FONTS_URL, $content);
-//        } elseif (function_exists('asset') && function_exists('app') && app()->has('url')) {
-//            $content = str_replace('../fonts', asset('/compiled/fonts/'), $content);
-//        }
-
-        return $content;
+        return '<style>' . $renderer->dumpCssAssets(null, false) . '</style>'
+            . '<script type="text/javascript">' . $renderer->dumpJsAssets(null, false) . '</script>';
     }
 }

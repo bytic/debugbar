@@ -61,5 +61,11 @@ class DebugbarMiddlewareTest extends AbstractTest
         $content = $response->getContent();
         self::assertStringStartsWith('<body>test</body>', $content);
         self::assertStringContainsString('phpdebugbar', $content);
+        self::assertStringNotContainsString('jQuery', $content);
+        self::assertStringNotContainsString('cdnjs.cloudflare.com', $content);
+
+        $renderer = $debugbar->getJavascriptRenderer();
+        self::assertSame(1, substr_count($content, $renderer->dumpCssAssets(null, false)));
+        self::assertSame(1, substr_count($content, $renderer->dumpJsAssets(null, false)));
     }
 }

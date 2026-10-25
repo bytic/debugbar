@@ -2,7 +2,6 @@
 
 namespace Nip\DebugBar;
 
-use DebugBar\Bridge\MonologCollector;
 use DebugBar\DataCollector\ExceptionsCollector;
 use DebugBar\DataCollector\MemoryCollector;
 use DebugBar\DataCollector\MessagesCollector;

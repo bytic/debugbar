@@ -3,6 +3,7 @@
 namespace Nip\DebugBar\Tests;
 
 use Nip\DebugBar\DebugBarServiceProvider;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Class DebugBarServiceProviderTest
@@ -10,11 +11,7 @@ use Nip\DebugBar\DebugBarServiceProvider;
  */
 class DebugBarServiceProviderTest extends AbstractTest
 {
-    /**
-     * @dataProvider dataBoot
-     * @param $config
-     * @param $times
-     */
+    #[DataProvider('dataBoot')]
     public function testBoot($config, $times)
     {
         $provider = \Mockery::mock(DebugBarServiceProvider::class)->makePartial();
@@ -29,7 +26,7 @@ class DebugBarServiceProviderTest extends AbstractTest
     /**
      * @return array
      */
-    public function dataBoot()
+    public static function dataBoot(): array
     {
         return [
             [null, 0],

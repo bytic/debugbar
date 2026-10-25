@@ -2,9 +2,8 @@
 
 namespace Nip\DebugBar\Traits;
 
-use DebugBar\Bridge\MonologCollector;
+use DebugBar\Bridge\Monolog\MonologCollector;
 use Monolog\Logger as MonologLogger;
-use Nip\DebugBar\Formatter\MonologFormatter;
 
 /**
  * Trait HasMonologCollector
@@ -43,7 +42,6 @@ trait HasMonologCollector
      */
     protected function addMonologCollector(MonologCollector $collector)
     {
-        $collector->setFormatter(new MonologFormatter());
         $this->addCollector($collector);
     }
 }
